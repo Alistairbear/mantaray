@@ -2,6 +2,6 @@
 #include "vector.h"
 #include "photon.h"
 
-bool intersectedBy(photon phot1) {
-
+bool sphere::intersectedBy(photon phot1) {
+    
 }
