@@ -8,10 +8,10 @@ class plane {
         vector location;
         vector direction1;
         vector direction2;
+        vector normal();
     public:
-        double getX();
-        double getY();
-        double getZ();
+        double intersects(photon phot1);
+        vector reflectVector(vector v1);
 };
 
 #endif
