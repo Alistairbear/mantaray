@@ -1,5 +1,11 @@
 #include "vector.h"
 
+vector::vector() {
+    components[0] = 0.0;
+    components[1] = 0.0;
+    components[2] = 0.0;
+}
+
 vector vector::subtract(vector v1) {
     vector result;
     result.setX(components[0] - v1.getX());

@@ -12,6 +12,9 @@ class plane {
     public:
         double intersects(photon phot1);
         vector reflectVector(vector v1);
+        void setLocation(vector v1);
+        void setDirection1(vector v1);
+        void setDirection2(vector v1);
 };
 
 #endif

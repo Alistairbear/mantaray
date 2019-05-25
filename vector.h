@@ -4,8 +4,8 @@
 class vector {
     private:
         double components[2];
-        double magnitude();
     public:
+        vector();
         double getX();
         void setX(double n);
         double getY();
@@ -17,6 +17,7 @@ class vector {
         vector unit();
         vector scale(double scalar);
         vector subtract(vector v1);
+        double magnitude();
 };
 
 #endif

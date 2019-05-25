@@ -27,3 +27,15 @@ vector plane::reflectVector(vector v1) {
     result = result.subtract(incident);
     return result;
 }
+
+void plane::setLocation(vector v1) {
+    location = v1;
+}
+
+void plane::setDirection1(vector v1) {
+    direction1 = v1;
+}
+
+void plane::setDirection2(vector v1) {
+    direction2 = v1;
+}

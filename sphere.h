@@ -11,8 +11,10 @@ class sphere {
         vector getIntersectionPoint();
     public:
         double getRadius();
+        void setRadius(double r);
+        void setCentre(vector v1);
         bool intersectedBy(photon phot1);
-        photon reflect();
+        photon reflectPhoton(photon p1);
 };
 
 #endif
