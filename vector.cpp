@@ -62,3 +62,9 @@ void vector::setY(double n) {
 void vector::setZ(double n) {
     components[2] = n;
 }
+
+void vector::reset() {
+    components[0] = 0;
+    components[1] = 0;
+    components[2] = 0;
+}

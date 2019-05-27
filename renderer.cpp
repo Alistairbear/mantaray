@@ -6,14 +6,18 @@ using namespace std;
 #include "sphere.h"
 #include "photon.h"
 
-int createImage() {
+/*int createImage() {
     
-}
+}*/
 
 int main() {
-    const int imageHeight = 128;
-    const int imageWidth = 128;
-    const int screenDistance = 128; // the distance between the camera and the screen
+    int imageHeight = 128;
+    int imageWidth = 128;
+    int screenDistance = 128; // the distance between the camera and the screen
+    int numberOfPasses = 4; // number of photons per pixel
+    //should probably store the intensity in the pixel rather than the photon.
+    // individual photons don't have intensity as intensity can be thought of as photons per second
+    int roomSize = 128;
 
     int image[imageHeight][imageWidth];
 
@@ -27,16 +31,61 @@ int main() {
     walls[0].setLocation(temp);
     temp.setX(1);
     walls[0].setDirection1(temp);
-    temp.setX(0);
+    temp.setY(0);
     temp.setZ(1);
     walls[0].setDirection2(temp);
+
     //describe the ceiling
-    walls[0].setLocation(temp);
+    temp.reset();
+    temp.setY(roomSize);
+    walls[1].setLocation(temp);
+    temp.setY(0);
     temp.setX(1);
-    walls[0].setDirection1(temp);
-    temp.setX(0);
+    walls[1].setDirection1(temp);
+    temp.setY(0);
     temp.setZ(1);
-    walls[0].setDirection2(temp);
+    walls[1].setDirection2(temp);
+
+    // describe the left wall
+    temp.reset();
+    temp.setX(-roomSize / 2);
+    walls[3].setLocation(temp);
+    temp.setX(0);
+    temp.setY(1);
+    walls[3].setDirection1(temp);
+    temp.setZ(1);
+    walls[3].setDirection2(temp);
+
+    // describe the right wall
+    temp.reset();
+    temp.setX(roomSize / 2);
+    walls[4].setLocation(temp);
+    temp.setX(0);
+    temp.setY(1);
+    walls[4].setDirection1(temp);
+    temp.setZ(1);
+    walls[4].setDirection2(temp);
+
+    // describe the back wall
+    temp.reset();
+    temp.setZ(roomSize);
+    walls[5].setLocation(temp);
+    temp.setZ(0);
+    temp.setY(1);
+    walls[5].setDirection1(temp);
+    temp.setY(0);
+    temp.setX(1);
+    walls[5].setDirection2(temp);
+
+    //describe the front wall
+    temp.reset();
+    walls[6].setLocation(temp);
+    temp.setY(1);
+    walls[6].setDirection1(temp);
+    temp.setY(0);
+    temp.setX(1);
+    walls[6].setDirection2(temp);
+
 
     // need to set up the locations of the walls and all other variables
 
@@ -46,7 +95,7 @@ int main() {
     photon currentPhoton; // used to store all information about the photon being simulated. Saves having to create multiple variables
     plane imageScreen; // this is the 3D representation of the image the camera is taking. The image will be projected onto this plane.
     
-    //bool hitObject; //this could come later
+    //bool hitObject; //this could come later, it could be used when there are not surrounding walls
     double lambda = 0.0; // a scalar parameter to determine how far in front of a photon an obstacle is
     double smallestLambda = 0.0; // similar but used to track the smallest result
     
@@ -78,6 +127,9 @@ int main() {
                 if (lightSource.intersectedBy(currentPhoton)) {
                     image[height][width] = currentPhoton.getIntensity();
                     currentPhoton.setIntensity(0); // this ends the loop (the photon calculation has been finished)
+
+                    // SDL_RenderDrawPoint(renderer, x, y);
+
                 }
             }
         }

@@ -18,6 +18,7 @@ class vector {
         vector scale(double scalar);
         vector subtract(vector v1);
         double magnitude();
+        void reset();
 };
 
 #endif

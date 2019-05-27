@@ -8,6 +8,9 @@ class photon {
         vector location;
         vector direction;
         int intensity = 10; // the intensity is a percentage. For the current level of detail 10 increments will be sufficient
+        // improvements:
+        // make intensity an array of red green and blue
+        // add a double to represent polarisation angle in radians (or degrees to work in integers. Arcminutes?)
     public:
         double getLocationX();
         void setLocationX(double n);
