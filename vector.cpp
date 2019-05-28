@@ -6,11 +6,20 @@ vector::vector() {
     components[2] = 0.0;
 }
 
+vector vector::add(vector v1) {
+    vector result;
+    result.setX(components[0] + v1.getX());
+    result.setY(components[1] + v1.getY());
+    result.setZ(components[2] + v1.getZ());
+    return result;
+}
+
 vector vector::subtract(vector v1) {
     vector result;
     result.setX(components[0] - v1.getX());
     result.setY(components[1] - v1.getY());
     result.setZ(components[2] - v1.getZ());
+    return result;
 }
 
 vector vector::crossProduct(vector vect1) {

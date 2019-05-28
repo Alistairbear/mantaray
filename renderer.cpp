@@ -38,7 +38,7 @@ int main() {
     int imageHeight = 128;
     int imageWidth = 128;
     int screenDistance = 128; // the distance between the camera and the screen
-    int numberOfPasses = 4; // number of photons per pixel
+    //int numberOfPasses = 4; // number of photons per pixel
     //should probably store the intensity in the pixel rather than the photon.
     // individual photons don't have intensity as intensity can be thought of as photons per second
     int roomSize = 128;
@@ -126,6 +126,9 @@ int main() {
     for (int height = 0; height < imageHeight; height++) {
         for (int width = 0; width < imageWidth; width++) {
             // need to set up each photon here
+            temp.reset();
+            
+
             while (currentPhoton.getIntensity() > 0) {
                 for (int wallIndex = 0; wallIndex < 6; wallIndex++) {
                     lambda = walls[wallIndex].intersects(currentPhoton);
@@ -143,7 +146,7 @@ int main() {
                 // REFLECTION PROCESSING
                 lambda = smallestLambda;
                 //change location of photon to intersection with closest plane
-                currentPhoton.setLocation(currentPhoton.getLocation + currentPhoton.getDirection().scale(lambda));
+                currentPhoton.setLocation(currentPhoton.getLocation().add(currentPhoton.getDirection().scale(lambda)));
                 currentPhoton.setDirection(walls[planeReflectionToProcess].reflectVector(currentPhoton.getDirection()));
 
                 currentPhoton.reduceIntensity();

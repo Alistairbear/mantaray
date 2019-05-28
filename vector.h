@@ -16,6 +16,7 @@ class vector {
         double dotProduct(vector vect1);
         vector unit();
         vector scale(double scalar);
+        vector add(vector v1);
         vector subtract(vector v1);
         double magnitude();
         void reset();
