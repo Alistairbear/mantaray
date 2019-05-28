@@ -1,3 +1,6 @@
+
+//Using SDL and standard IO
+#include <SDL2/SDL.h>
 #include <stdio.h>
 using namespace std;
 
@@ -6,11 +9,32 @@ using namespace std;
 #include "sphere.h"
 #include "photon.h"
 
+//Starts up SDL and creates window
+bool init(int height, int width);
+
+//Frees media and shuts down SDL
+void close();
+
+//The window we'll be rendering to
+SDL_Window* gWindow = NULL;
+
+/*/The surface contained by the window
+SDL_Surface* gScreenSurface = NULL;
+
+//The image we will load and show on the screen
+SDL_Surface* gHelloWorld = NULL;*/
+
+// the renderer used to draw the pixels on screen
+SDL_Renderer* gRenderer = NULL;
+
 /*int createImage() {
     
 }*/
 
 int main() {
+
+    int currentPixelColour;
+
     int imageHeight = 128;
     int imageWidth = 128;
     int screenDistance = 128; // the distance between the camera and the screen
@@ -134,4 +158,73 @@ int main() {
             }
         }
     }
+
+    //Start up SDL and create window
+    if ( !init(imageHeight, imageWidth) ) {
+        printf( "Failed to initialize!\n" );
+    } else {
+        for (int height = 0; height < imageHeight; height++) {
+            for (int width = 0; width < imageWidth; width++) {
+                currentPixelColour = image[height][width];
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+                SDL_RenderDrawPoint(gRenderer, width, height);
+            }
+        }
+
+        //Apply the image
+        //SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
+        
+
+        //Update the surface
+        SDL_UpdateWindowSurface( gWindow );
+
+        //Wait two seconds
+        SDL_Delay( 5000 );
+    }
+
+    //Free resources and close SDL
+    close();
+
+    return 0;
+}
+
+bool init(int height, int width) {
+    //Initialization flag
+    bool success = true;
+
+    //Initialize SDL
+    if ( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
+        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+        success = false;
+    } else {
+        //Create window
+        gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN );
+        if ( gWindow == NULL ) {
+            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+            success = false;
+        } else {
+            //Get window surface
+            gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED);
+            if ( gRenderer == NULL ) {
+                printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+                success = false;
+            }
+        }
+    }
+
+    return success;
+}
+
+void close()
+{
+    //Deallocate surface
+    SDL_DestroyRenderer( gRenderer );
+    gRenderer = NULL;
+
+    //Destroy window
+    SDL_DestroyWindow( gWindow );
+    gWindow = NULL;
+
+    //Quit SDL subsystems
+    SDL_Quit();
 }
